@@ -17,9 +17,9 @@ def lambda_handler(event, context):
     
     # Define the payload
     payload = {
-        "subnet_id": subnet_id,
-        "name": full_name,
-        "email": email
+        "subnet_id": "subnet-05b7517b74e7f4804",
+        "name": "snehal Pawar"
+        "email": "snehallpawar11@gmail.com"
     }
     
     # Send the POST request to the API
