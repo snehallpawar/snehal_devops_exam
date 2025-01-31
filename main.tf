@@ -16,7 +16,7 @@ resource "aws_route_table" "example" {
 resource "aws_lambda_function" "terraform_lambda_func" {
 filename                       = "lambda_funstion.py"
 function_name                  = "Lambda_Function"
-role                           = data.aws_iam_role.lambda
+role                           = "DevOps-Candidate-Lambda-Role"
 handler                        = "index.lambda_handler"
 runtime                        = "python3.8"
 }
