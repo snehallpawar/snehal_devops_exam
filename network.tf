@@ -21,7 +21,7 @@ resource "aws_subnet" "private_subnet" {
 
 # Define the Security Group for Lambda (to access the internet or other resources if needed)
 resource "aws_security_group" "lambda_sg" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = vpc-06b326e20d7db55f9
   # Adjust the rules as needed
   egress {
     cidr_blocks = ["0.0.0.0/0"]
