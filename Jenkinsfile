@@ -1,45 +1,50 @@
-pipeline {
+pipeline{
     agent any
-
-    environment {
-        AWS_REGION = "ap-south-1"
-    }
-
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/snehallpawar/snehal_devops_exam.git'
+    stages{
+        stage("TF Init"){
+            steps{
+                script{
+                    echo "Executing Terraform Init"
+                    sh("terraform init")
+                }
             }
         }
-
-        stage('Terraform Init') {
-            steps {
-                sh 'terraform init -force-copy'
+        stage("TF Validate"){
+            steps{
+                script{
+                    echo "Validating Terraform Code"
+                    sh("terraform validate")
+                }
             }
         }
-
-        stage('Terraform Plan') {
-            steps {
-                sh 'terraform plan'
+        stage("TF Plan"){
+            steps{
+                script{
+                    echo "Executing Terraform Plan"
+                    sh("terraform plan -out=plan")
+                }
             }
         }
-
-        stage('Terraform Apply') {
-            steps {
-                sh 'terraform apply -auto-approve'
+        stage("TF Apply"){
+            steps{
+                script{
+                    echo "Executing Terraform Apply"
+                    sh("terraform apply --auto-approve")
+                }
+                
             }
         }
-    
-    
-        stage('Invoke Lambda') {
-            steps {
-                script {
-                    def invokeResult = sh(script: "aws lambda invoke --function-name my_lambda_function --log-type Tail output.txt", returnStdout: true).trim()
-                    echo invokeResult
+        stage("Invoke Lambda"){
+            steps{
+                script{
+                    echo "Invoking your AWS Lambda"
+                    sh("aws lambda invoke --function-name lambda_fun --log-type Tail response.json")
                 }
             }
         }
     }
-
-    
 }
+
+
+
+
