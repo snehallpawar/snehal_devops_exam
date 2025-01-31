@@ -1,4 +1,4 @@
-[12:44, 1/31/2025] Santosh 🙂: # Define the VPC
+
 resource "aws_vpc" "main_vpc" {
   cidr_block = "10.0.0.0/16"
   enable_dns_support = true
