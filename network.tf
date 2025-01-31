@@ -8,3 +8,6 @@ resource "aws_subnet" "private_subnet" {
     Name = "private_subnet"
   }
 }
+output "private_subnet_id" {
+value =aws.subnet.private_subnet.id
+}
