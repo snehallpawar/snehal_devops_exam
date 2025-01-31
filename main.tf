@@ -1,22 +1,30 @@
-resource "aws_subnet" "public" {
-  vpc_id = "vpc-06b326e20d7db55f9"
-   cidr_block = "10.0.3.0/24"
+
+resource "aws_subnet" "private" {
+  vpc_id = data.aws_vpc.vpc.id
+  cidr_block = "10.0.6.0/24"
+  availability_zone = "ap-south-1a"
+  map_public_ip_on_launch = false
 }
 
-resource "aws_route_table" "example" {
+resource "aws_route_table" "private_table" {
   vpc_id = data.aws_vpc.vpc.id
 
   route {
-    cidr_block = "10.0.3.0/24"
-    gateway_id = "nat-0a34a8efd5e420945"
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = data.aws_nat_gateway.nat.id
   }
-
 }
 
-resource "aws_lambda_function" "terraform_lambda_func" {
-filename                       = "lambda_funstion.py"
-function_name                  = "Lambda_Function"
-role                           = "data.aws_iam_role.lambda"
-handler                        = "index.lambda_handler"
-runtime                        = "python3.8"
+resource "aws_route_table_association" "private_table_assoctation" {
+  subnet_id = aws_subnet.private.id
+  route_table_id = aws_route_table.private_table.id
+}
+
+
+resource "aws_lambda_function" "lambda_function" {
+  function_name = "lambda_function"
+  role = data.aws_iam_role.lambda.arn
+  handler = "lambda_function.lambda"
+  runtime = "python3.8"
+  filename = "lambda_function.zip"
 }
