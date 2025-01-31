@@ -17,7 +17,7 @@ def lambda_handler(event, context):
     
     # Define the payload
     payload = {
-        "subnet_id": "subnet-05b7517b74e7f4804",
+        "subnet_id": aws_subnet.private_subnet,
         "name": "snehal Pawar"
         "email": "snehallpawar11@gmail.com"
     }
