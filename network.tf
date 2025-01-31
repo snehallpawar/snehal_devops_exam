@@ -18,6 +18,6 @@ resource "aws_route_table" "private_route_table" {
   }
 
   tags = {
-    Name = "private-route-table"
+    Name = "DevOps-Candidate-Lambda-Role"
   }
 }
