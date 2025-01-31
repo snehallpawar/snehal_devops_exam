@@ -30,4 +30,23 @@ pipeline {
             }
         }
     }
+          stage('Invoke Lambda Function') {
+            steps {
+                script {
+                    // Invoke Lambda function using AWS CLI
+                    sh 'aws lambda invoke --function-name my-lambda-function output.txt --log-type Tail'
+                }
+            }
+        }
+
+        stage('Base64 Decode Log Result') {
+            steps {
+                script {
+                    // Decode the base64 log result returned by Lambda
+                    def result = sh(script: "cat output.txt", returnStdout: true).trim()
+                    def decodedResult = sh(script: "echo ${result} | base64 --decode", returnStdout: true).trim()
+                    echo "Decoded Log Result: ${decodedResult}"
+                }
+            }
+        }
 }
