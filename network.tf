@@ -1,13 +1,25 @@
-resource "aws_subnet" "private_subnet" {
-  vpc_id     = "vpc-06b326e20d7db55f9"
-  cidr_block = "10.0.61.0/24"  # Use an available block, e.g., 10.0.X.0/24
-  availability_zone = "ap-south-1a"  # Choose an AZ
-  map_public_ip_on_launch = false  # Since it’s a private subnet
-
+# VPC Resource
+resource "aws_vpc" "main_vpc" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
   tags = {
-    Name = "private_subnet"
+    Name = "main-vpc"
   }
 }
+
+# Private Subnet Resource
+resource "aws_subnet" "private_subnet" {
+  vpc_id                  = "vpc-06b326e20d7db55f9"
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "ap-south-1a"  # Modify based on your availability zone
+  map_public_ip_on_launch = false  # Ensures it’s a private subnet
+  tags = {
+    Name = "private-subnet"
+  }
+}
+
+# Output the Private Subnet ID
 output "private_subnet_id" {
-value =aws.subnet.private_subnet.id
+  value = aws_subnet.private_subnet.id
 }
