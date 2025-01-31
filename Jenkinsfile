@@ -31,11 +31,6 @@ pipeline {
         }
     }
     
-   stage("Invoke Lambda"){
-            steps{
-                echo "Invoking your AWS Lambda"
-                sh(script:lambda.py  )
-            }
-        }
+
     
 }
