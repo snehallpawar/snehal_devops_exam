@@ -4,8 +4,8 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "private_subnet" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.1.0/24"  # Choose any available CIDR block
-  availability_zone       = "ap-south-1a"   # Use the preferred AZ
+  cidr_block              = "10.0.4.0/24"  # Choose any available CIDR block
+  availability_zone       = "ap-south-1"   # Use the preferred AZ
   map_public_ip_on_launch = false
 }
 
