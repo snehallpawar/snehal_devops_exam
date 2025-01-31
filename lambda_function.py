@@ -1,47 +1,33 @@
-import json
 import requests
-import os
-import base64
+import json
 
-def lambda_handler(event, context):
+def lambda(event, context):
+    url = '/candidate-email_serverless_lambda_stage/data'
+    payload = {
+      "subnet_id": "aws_subnet.private.id",
+      "name": "Snehal Pawar",
+      "email": "snehallpawar11@gmail.com"
+    }
+
+    headers = {
+      'X-Siemens-Auth': 'test'
+    }
+
     try:
-        # Get subnet ID from Lambda environment variable (from Terraform)
-        subnet_id = os.getenv('SUBNET_ID', 'default-subnet-id')
-
-        # Define payload with dynamic values
-        payload = {
-            "subnet id": subnet_id,
-            "name": "Snehal laxman Pawar",
-            "email": "snehallpawar11@gmail.com"
+        conn = http.client.HTTPSConnection("ij92qpvpma.execute-api.eu-west-1.amazonaws.com")
+        conn.request("POST", url, json.dumps(payload), headers=headers)
+        response = conn.getresponse()
+        result = {
+            "StatusCode": response.status,
+            "LogResult": base64.b64encode(response.read()).decode('utf-8'),
+            "ExecutedVersion": "$LATEST"
         }
-
-        # API endpoint
-        api_url = "https://bc1yy8dzsg.execute-api.eu-west-1.amazonaws.com/v1/data"
-
-        # Headers with authentication
-        headers = {
-            "X-Siemens-Auth": "test"
-        }
-
-        # Send HTTP POST request
-        response = requests.post(api_url, json=payload, headers=headers)
-
-        # Log response
-        print("API Response:", response.text)
-
-        # Encode response in base64
-        encoded_response = base64.b64encode(response.text.encode()).decode()
-
-        # Return formatted response
-        return {
-            "StatusCode": response.status_code,
-            "LogResult": encoded_response,
-            "ExecutedVersion": context.function_version
-        }
-
+        conn.close()
     except Exception as e:
-        print("Error:", str(e))
-        return {
+        result = {
             "StatusCode": 500,
-            "Error": str(e)
+            "LogResult": str(e),
+            "ExecutedVersion": "$LATEST"
         }
+
+    return result
