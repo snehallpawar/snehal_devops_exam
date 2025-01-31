@@ -13,7 +13,7 @@ resource "aws_route_table" "private_route_table" {
   vpc_id = "vpc-06b326e20d7db55f9"  # Replace with your VPC ID
 
   route {
-    cidr_block = "10.0.0.0/16"
+    cidr_block = "0.0.0.0/0"
     gateway_id = "nat-0a34a8efd5e420945"  # Replace with your NAT Gateway ID
   }
 
