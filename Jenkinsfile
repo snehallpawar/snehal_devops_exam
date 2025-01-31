@@ -31,11 +31,5 @@ pipeline {
         }
     }
     
-        stage('Invoke Lambda') {
-            steps {
-                script {
-                    sh 'aws lambda invoke --function-name lambda_handler --log-type Tail output.txt'
-                }
-            }
-        }
+  
 }
