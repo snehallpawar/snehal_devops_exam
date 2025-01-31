@@ -1,10 +1,9 @@
 resource "aws_subnet" "private_subnet" {
   vpc_id                  = "vpc-06b326e20d7db55f9"  # Replace with your VPC ID
-  cidr_block              = "10.0.4.0/24"  # Replace with an available CIDR block
-  availability_zone       = "ap-south-1a"  # Choose the availability zone
+  cidr_block              = "10.0.8.0/24"  # Replace with an available CIDR block
   map_public_ip_on_launch = false
   tags = {
-    Name = "private-subnet"
+    Name = "DevOps-Candidate-Lambda-Role"
   }
 }
 
