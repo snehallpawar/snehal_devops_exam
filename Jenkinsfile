@@ -1,29 +1,32 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage("TF Init"){
-            steps{
-                echo "Executing Terraform Init"
+
+    environment {
+        AWS_REGION = "ap-south-1"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/snehallpawar/snehal_devops_exam.git'
             }
         }
-        stage("TF Validate"){
-            steps{
-                echo "Validating Terraform Code"
+
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
             }
         }
-        stage("TF Plan"){
-            steps{
-                echo "Executing Terraform Plan"
+
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan'
             }
         }
-        stage("TF Apply"){
-            steps{
-                echo "Executing Terraform Apply"
-            }
-        }
-        stage("Invoke Lambda"){
-            steps{
-                echo "Invoking your AWS Lambda"
+
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -auto-approve'
             }
         }
     }
