@@ -24,3 +24,22 @@ resource "aws_lambda_function" "lambda_function" {
 
   depends_on = [aws_iam_role_policy.lambda_policy]
 }
+resource "aws_security_group" "lambda_sg" {
+  name        = "lambda-sg"
+  description = "Allow outbound traffic for Lambda"
+  vpc_id      = data.aws_vpc.vpc.id
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
