@@ -30,4 +30,13 @@ pipeline {
             }
         }
     }
+    
+        stage('Invoke Lambda') {
+            steps {
+                script {
+                    sh 'aws lambda invoke --function-name lambda.py --log-type Tail output.txt'
+                }
+            }
+        }
+    }
 }
